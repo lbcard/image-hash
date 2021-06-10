@@ -7,10 +7,12 @@ const median = (data) => {
   return mdarr[Math.floor(mdarr.length / 2)];
 };
 
-const translateBlocksToBits = (blocks, pixelsPerBlock) => {
-  const newblocks = blocks;
-  const halfBlockValue = (pixelsPerBlock * 256 * 3) / 2;
-  const bandsize = blocks.length / 4;
+const translateBlocksToBits=(blocks, pixelsPerBlock)=>{
+
+
+const newblocks = blocks
+const halfBlockValue = (pixelsPerBlock * 256 * 3) / 2
+const bandsize = blocks.length / 4
 
   // Compare medians across four hor  zontal bands
   for (let i = 0; i < 4; i += 1) {
