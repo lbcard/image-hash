@@ -18,17 +18,21 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Test using Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
       - run: npm i
       - run: npm run test
       - name: Tests ✅
-              if: ${{ success() }}
-              run: |
-                curl --request POST --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' --header 'content-type: application/json' --data '{
-                  "context": "tests",
-                  "state": "success",
-                  "description": "Tests passed",
-                  "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                }'
+          if: ${{ success() }}
+          run: |
+            curl --request POST --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' --header 'content-type: application/json' --data '{
+              "context": "tests",
+              "state": "success",
+              "description": "Tests passed",
+              "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }'
       - name: Tests 🚨
           if: ${{ failure() }}
           run: |
